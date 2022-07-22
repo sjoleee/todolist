@@ -6,6 +6,8 @@ const Form = styled.form`
   left: 400px;
   position: absolute;
   top: 300px;
+  display: flex;
+  flex-direction: column;
 `;
 
 // function ToDoList() {
@@ -41,16 +43,29 @@ function ToDoList() {
   const onVaild = (data: any) => {
     console.log(data);
   };
+
   return (
     <Form onSubmit={handleSubmit(onVaild)}>
       <input
         {...register("id", { required: true, minLength: 10 })}
         placeholder="입력하세요"
       />
-      <input {...register("password")} placeholder="입력하세요" />
-      <input {...register("name")} placeholder="입력하세요" />
-      <input {...register("phone")} placeholder="입력하세요" />
-      <input {...register("email")} placeholder="입력하세요" />
+      <input
+        {...register("password", { required: true, minLength: 10 })}
+        placeholder="입력하세요"
+      />
+      <input
+        {...register("name", { required: true, minLength: 10 })}
+        placeholder="입력하세요"
+      />
+      <input
+        {...register("phone", { required: true, minLength: 10 })}
+        placeholder="입력하세요"
+      />
+      <input
+        {...register("email", { required: true, minLength: 10 })}
+        placeholder="입력하세요"
+      />
       <button>제출</button>
     </Form>
   );
