@@ -37,16 +37,20 @@ const Form = styled.form`
 // }
 
 function ToDoList() {
-  const { register, watch } = useForm();
-  console.log(watch());
-
+  const { register, handleSubmit } = useForm();
+  const onVaild = (data: any) => {
+    console.log(data);
+  };
   return (
-    <Form>
-      <input {...register("id")} placeholder="입력하세요"></input>
-      <input {...register("password")} placeholder="입력하세요"></input>
-      <input {...register("name")} placeholder="입력하세요"></input>
-      <input {...register("phone")} placeholder="입력하세요"></input>
-      <input {...register("email")} placeholder="입력하세요"></input>
+    <Form onSubmit={handleSubmit(onVaild)}>
+      <input
+        {...register("id", { required: true, minLength: 10 })}
+        placeholder="입력하세요"
+      />
+      <input {...register("password")} placeholder="입력하세요" />
+      <input {...register("name")} placeholder="입력하세요" />
+      <input {...register("phone")} placeholder="입력하세요" />
+      <input {...register("email")} placeholder="입력하세요" />
       <button>제출</button>
     </Form>
   );
