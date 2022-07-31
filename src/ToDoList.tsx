@@ -1,73 +1,58 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { atom, useRecoilState } from "recoil";
 import styled from "styled-components";
 
 const Form = styled.form`
-  left: 400px;
+  left: 100px;
   position: absolute;
   top: 300px;
   display: flex;
   flex-direction: column;
 `;
 
-// function ToDoList() {
-//   const [value, setValue] = useState("");
-//   const [valueError, setValueError] = useState("");
-//   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
-//     const {
-//       currentTarget: { value },
-//     } = event;
-//     setValueError("");
-//     setValue(value);
-//   };
-//   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-//     if (value.length < 10) {
-//       setValueError("error");
-//       return valueError;
-//     }
-//     console.log("submit");
-//   };
+interface IToDo {
+  text: string;
+  id: number;
+  category: "TO_DO" | "DOING" | "DONE";
+}
 
-//   return (
-//     <Form onSubmit={onSubmit}>
-//       <input onChange={onChange} value={value} placeholder="입력하세요"></input>
-//       <button>제출</button>
-//       {valueError !== "" ? <div>{valueError}</div> : null}
-//     </Form>
-//   );
-// }
+interface IForm {
+  toDo: string;
+}
+
+const toDoState = atom<IToDo[]>({
+  key: "toDo",
+  default: [],
+});
 
 function ToDoList() {
-  const { register, handleSubmit } = useForm();
-  const onVaild = (data: any) => {
-    console.log(data);
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const { register, handleSubmit, setValue } = useForm<IForm>();
+  const onValid = (data: IForm) => {
+    console.log("add to do", data.toDo);
+    setToDos((prev) => [
+      { text: data.toDo, id: Date.now(), category: "TO_DO" },
+      ...prev,
+    ]);
+    setValue("toDo", "");
   };
-
+  console.log(toDos);
   return (
-    <Form onSubmit={handleSubmit(onVaild)}>
-      <input
-        {...register("id", { required: true, minLength: 10 })}
-        placeholder="입력하세요"
-      />
-      <input
-        {...register("password", { required: true, minLength: 10 })}
-        placeholder="입력하세요"
-      />
-      <input
-        {...register("name", { required: true, minLength: 10 })}
-        placeholder="입력하세요"
-      />
-      <input
-        {...register("phone", { required: true, minLength: 10 })}
-        placeholder="입력하세요"
-      />
-      <input
-        {...register("email", { required: true, minLength: 10 })}
-        placeholder="입력하세요"
-      />
-      <button>제출</button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <input
+          {...register("toDo", { required: "please write a To Do" })}
+          placeholder="입력하세요"
+        ></input>
+        <button>제출</button>
+      </Form>
+      {toDos.map((item) => (
+        <div key={item.id}>
+          <p>{item.text}</p>
+          <p>{item.category}</p>
+        </div>
+      ))}
+    </>
   );
 }
 
