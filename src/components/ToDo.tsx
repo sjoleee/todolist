@@ -4,7 +4,11 @@ import { IToDo, toDoState } from "../atom";
 function ToDo({ text, id, category }: IToDo) {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.name);
+    // console.log(event.currentTarget.name);
+    const {
+      currentTarget: { name },
+    } = event;
+    console.log(event);
   };
 
   return (
