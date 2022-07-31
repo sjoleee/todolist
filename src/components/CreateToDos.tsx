@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { atom, useRecoilState } from "recoil";
 import styled from "styled-components";
+import { toDoState } from "../atom";
 
 const Form = styled.form`
   left: 100px;
@@ -13,17 +14,6 @@ const Form = styled.form`
 interface IForm {
   toDo: string;
 }
-
-interface IToDo {
-  text: string;
-  id: number;
-  category: "TO_DO" | "DOING" | "DONE";
-}
-
-export const toDoState = atom<IToDo[]>({
-  key: "toDo",
-  default: [],
-});
 
 function CreateToDos() {
   const [toDos, setToDos] = useRecoilState(toDoState);
