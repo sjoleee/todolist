@@ -3,12 +3,28 @@ import { IToDo, toDoState } from "../atom";
 
 function ToDo({ text, id, category }: IToDo) {
   const [toDos, setToDos] = useRecoilState(toDoState);
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(event.currentTarget.name);
+  };
+
   return (
     <div>
       <span>{text}</span>
-      <button>To do</button>
-      <button>Doing</button>
-      <button>Done</button>
+      {category !== "TO_DO" ? (
+        <button name="TO_DO" onClick={onClick}>
+          To do
+        </button>
+      ) : null}
+      {category !== "DOING" ? (
+        <button name="DOING" onClick={onClick}>
+          Doing
+        </button>
+      ) : null}
+      {category !== "DONE" ? (
+        <button name="DONE" onClick={onClick}>
+          Done
+        </button>
+      ) : null}
     </div>
   );
 }
