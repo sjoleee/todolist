@@ -5,7 +5,6 @@ import ToDo from "./components/ToDo";
 
 function ToDoList() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-
   console.log(toDos);
   return (
     <>

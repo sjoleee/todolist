@@ -8,7 +8,6 @@ function ToDo({ text, id, category }: IToDo) {
     const {
       currentTarget: { name },
     } = event;
-    console.log(toDos);
     //버튼 누르면 해당 버튼에 해당하는 상태(doing, done)로 변경되게 만들고 싶다.
     setToDos((prev) => {
       //결국 toDos를 변경해줘야하는거니까 setToDos를 쓰자.
@@ -17,11 +16,17 @@ function ToDo({ text, id, category }: IToDo) {
       //기존 toDos를 가져와서, findIndex, 그러니까 몇번째인지 찾는 매서드를 사용한다. findIndex는 인자로 함수를 받는데, 함수의 조건에 맞는게 몇번째였는지 찾아준다.
       //이 경우에는 prev, 그러니까 기존 toDos에서 하나하나 투두들을 들여다보는데 버튼을 클릭한 그 toDo의 아이디와 돌고있는 toDo의 아이디가 같으면 그게 몇번째였는지 찾아주는거.
       const oldToDo = prev[targetIdx];
-      const newToDo = { text, id, category: name };
+      const newToDo = { text, id, category: name as any };
       //그렇게 targetIdx를 찾아내면, 이제 누른 버튼에 해당하는 상태로 변경해줘야한다.
       //newToDo를 만들건데, text나 id는 유지하는데 category만 버튼의 name으로 변경해준다.
-      console.log(newToDo);
-      return prev;
+      return [
+        ...prev.slice(0, targetIdx),
+        newToDo,
+        ...prev.slice(targetIdx + 1),
+      ];
+      //이제 찾아낸 targetIdx 기준으로, 그 앞에있는 원소와 그 뒤에있는 원소는 그대로 유지하고 targetIdx에 해당하는 원소만 카테고리를 변경해서 집어넣어주면 된다.
+      //근데 카테고리 변경된건 이미 갖고있음 newToDo
+      //그걸 그냥 넣어주면 끝
     });
   };
 
