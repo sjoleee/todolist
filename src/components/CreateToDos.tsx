@@ -3,13 +3,13 @@ import { atom, useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "../atom";
 
-const Form = styled.form`
-  left: 100px;
-  position: absolute;
-  top: 300px;
-  display: flex;
-  flex-direction: column;
-`;
+// const Form = styled.form`
+//   left: 100px;
+//   position: absolute;
+//   top: 300px;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 interface IForm {
   toDo: string;
@@ -28,13 +28,13 @@ function CreateToDos() {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onValid)}>
+    <form onSubmit={handleSubmit(onValid)}>
       <input
         {...register("toDo", { required: "please write a To Do" })}
         placeholder="입력하세요"
       ></input>
       <button>제출</button>
-    </Form>
+    </form>
   );
 }
 

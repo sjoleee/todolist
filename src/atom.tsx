@@ -22,3 +22,8 @@ export const toDoSelector = selector({
     ];
   },
 });
+
+export const categoryState = atom({
+  key: "category",
+  default: "TO_DO",
+});
