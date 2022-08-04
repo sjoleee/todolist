@@ -15,7 +15,8 @@ export interface IToDo {
 
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
-  default: [],
+  default: JSON.parse(localStorage.getItem("toDos") || "[]"),
+  //기본값을 []로 주는게 아니라 애초에 로컬스토리지에 저장된 값을 불러옴. 로컬스토리지에 아무것도 없으면 "[]" 근데 JSON.parse를 통해 []로 변환됨
 });
 
 export const toDoSelector = selector({

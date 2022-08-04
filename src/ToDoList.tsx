@@ -1,10 +1,18 @@
+import { useEffect } from "react";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { Categories, categoryState, toDoSelector, toDoState } from "./atom";
 import CreateToDos from "./components/CreateToDos";
 import ToDo from "./components/ToDo";
 
 function ToDoList() {
-  // const [toDos, setToDos] = useRecoilState(toDoState);
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  useEffect(() => {
+    localStorage.setItem("toDos", JSON.stringify(toDos));
+  }, [toDos]);
+  //toDoState에서 관리되는 todo들에 변동이 생길때바다 로컬스토리지에 저장
+
+  console.log(toDos);
+
   const Todos = useRecoilValue(toDoSelector);
   const [category, setCategory] = useRecoilState(categoryState);
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
@@ -12,9 +20,7 @@ function ToDoList() {
       currentTarget: { value },
     } = event;
     setCategory(value as any);
-    console.log(category);
   };
-  console.log(category);
 
   return (
     <>
