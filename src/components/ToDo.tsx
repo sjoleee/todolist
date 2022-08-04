@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { IToDo, toDoState } from "../atom";
+import { Categories, IToDo, toDoState } from "../atom";
 
 function ToDo({ text, id, category }: IToDo) {
   const [toDos, setToDos] = useRecoilState(toDoState);
@@ -15,7 +15,6 @@ function ToDo({ text, id, category }: IToDo) {
       //toDos가 배열 안에 객체형태의 todo들이 모여있는거임. 그 중에서 내가 버튼을 클릭한 todo가 몇번째 todo인지 찾아내는 것.
       //기존 toDos를 가져와서, findIndex, 그러니까 몇번째인지 찾는 매서드를 사용한다. findIndex는 인자로 함수를 받는데, 함수의 조건에 맞는게 몇번째였는지 찾아준다.
       //이 경우에는 prev, 그러니까 기존 toDos에서 하나하나 투두들을 들여다보는데 버튼을 클릭한 그 toDo의 아이디와 돌고있는 toDo의 아이디가 같으면 그게 몇번째였는지 찾아주는거.
-      const oldToDo = prev[targetIdx];
       const newToDo = { text, id, category: name as any };
       //그렇게 targetIdx를 찾아내면, 이제 누른 버튼에 해당하는 상태로 변경해줘야한다.
       //newToDo를 만들건데, text나 id는 유지하는데 category만 버튼의 name으로 변경해준다.
@@ -33,18 +32,18 @@ function ToDo({ text, id, category }: IToDo) {
   return (
     <div>
       <span>{text}</span>
-      {category !== "TO_DO" ? (
-        <button name="TO_DO" onClick={onClick}>
+      {category !== Categories.TO_DO ? (
+        <button name={Categories.TO_DO} onClick={onClick}>
           To do
         </button>
       ) : null}
-      {category !== "DOING" ? (
-        <button name="DOING" onClick={onClick}>
+      {category !== Categories.DOING ? (
+        <button name={Categories.DOING} onClick={onClick}>
           Doing
         </button>
       ) : null}
-      {category !== "DONE" ? (
-        <button name="DONE" onClick={onClick}>
+      {category !== Categories.DONE ? (
+        <button name={Categories.DONE} onClick={onClick}>
           Done
         </button>
       ) : null}
