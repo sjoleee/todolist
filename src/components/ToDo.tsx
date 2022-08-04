@@ -29,6 +29,15 @@ function ToDo({ text, id, category }: IToDo) {
     });
   };
 
+  const onDelete = () => {
+    setToDos((prev) => {
+      const targetIdx = prev.findIndex((todo) => todo.id === id);
+      const copiedTodos = [...prev];
+      copiedTodos.splice(targetIdx, 1);
+      return copiedTodos;
+    });
+  };
+
   return (
     <div>
       <span>{text}</span>
@@ -47,6 +56,7 @@ function ToDo({ text, id, category }: IToDo) {
           Done
         </button>
       ) : null}
+      <button onClick={onDelete}>DELETE</button>
     </div>
   );
 }
